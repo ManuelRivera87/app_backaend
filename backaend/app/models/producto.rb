@@ -6,9 +6,8 @@ class Producto
   @@productos = []
   @@next_id = 1
 
-  def initialize(nombre:, descripcion:, precio:, cantidad:)
-    @id = @@next_id
-    @@next_id += 1
+  def initialize(id:, nombre:, descripcion:, precio:, cantidad:)
+    @id = id
     @nombre = nombre
     @descripcion = descripcion
     @precio = precio
@@ -35,13 +34,20 @@ class Producto
 
   def self.create(params)
     producto = new(
+      id: @@next_id,
       nombre: params['nombre'],
       descripcion: params['descripcion'],
       precio: params['precio'].to_f,
       cantidad: params['cantidad'].to_i
     )
+    @@next_id += 1
     @@productos << producto
     producto
+  end
+
+  def self.reset!
+    @@productos = []
+    @@next_id = 1
   end
 
   def update(params)

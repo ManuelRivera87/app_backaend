@@ -9,6 +9,11 @@ require_relative "../config/environment"
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.order = :random
+  config.before do
+    Producto.reset!
+    App.set :quotes, []
+    App.set :next_quote_id, 1
+  end
 end
 
 def app
